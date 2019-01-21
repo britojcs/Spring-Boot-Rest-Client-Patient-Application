@@ -21,8 +21,8 @@ public class PatientRestClientServiceImpl implements PatientRestClientService {
 
 	private RestTemplate patientRestTemplate;
 	
-	@Value("${patients.rest.api.url}")
-	private String patientRestApiUrl;
+	@Value("${patients.spring.data.rest.url}")
+	private String patientSpringDataRestUrl;
 	
 	private ObjectMapper patientObjectMapper;
 	
@@ -41,7 +41,7 @@ public class PatientRestClientServiceImpl implements PatientRestClientService {
 		
 		try {
 			//make REST call
-			ResponseEntity<String> entity = patientRestTemplate.getForEntity(patientRestApiUrl + "?sort=lastName, asc",String.class);
+			ResponseEntity<String> entity = patientRestTemplate.getForEntity(patientSpringDataRestUrl + "?sort=lastName, asc",String.class);
 			
 			//get the response body
 			String body = entity.getBody();
@@ -75,10 +75,10 @@ public class PatientRestClientServiceImpl implements PatientRestClientService {
 		
 		if (patientId == 0) {
 			//that means new patient need to be added
-			patientRestTemplate.postForEntity(patientRestApiUrl, thePatient, String.class);
+			patientRestTemplate.postForEntity(patientSpringDataRestUrl, thePatient, String.class);
 		}else {
 			//that means update current patient
-			patientRestTemplate.put(patientRestApiUrl + "/" + patientId,  thePatient);
+			patientRestTemplate.put(patientSpringDataRestUrl + "/" + patientId,  thePatient);
 		}
 
 	}
@@ -87,7 +87,7 @@ public class PatientRestClientServiceImpl implements PatientRestClientService {
 	public Patient getPatientById(int patientId) {
 		try {
 			//make REST call
-			ResponseEntity<String> entity = patientRestTemplate.getForEntity(patientRestApiUrl + "/" + patientId,
+			ResponseEntity<String> entity = patientRestTemplate.getForEntity(patientSpringDataRestUrl + "/" + patientId,
 					String.class);
 			
 			//get the response body
@@ -107,7 +107,7 @@ public class PatientRestClientServiceImpl implements PatientRestClientService {
 	@Override
 	public void deletePatient(int patientId) {
 		// make REST call
-		patientRestTemplate.delete(patientRestApiUrl + "/" + patientId);
+		patientRestTemplate.delete(patientSpringDataRestUrl + "/" + patientId);
 
 	}
 
