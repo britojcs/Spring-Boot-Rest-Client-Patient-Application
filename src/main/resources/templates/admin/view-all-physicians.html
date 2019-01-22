@@ -42,7 +42,7 @@
 				
 						<!-- Add new button: Add Patient -->
 					
-						<input type="button" class="btn btn-primary" value = "Add Patient"
+						<input type="button" class="btn btn-primary" value = "Add Physician"
 								onclick="window.location.href='showFormForAdd'; return false;"/> 
 					
 					
@@ -50,7 +50,7 @@
 								
 			      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
 			        <div class="input-group">
-			          <input type="text" class="form-control" placeholder="Search patient..." aria-label="Search" aria-describedby="basic-addon2">
+			          <input type="text" class="form-control" placeholder="Search physican..." aria-label="Search" aria-describedby="basic-addon2">
 			          <div class="input-group-append">
 			            <button class="btn btn-primary" type="button">
 			              <i class="fas fa-search"></i>
@@ -68,9 +68,10 @@
 			<thead class="thead-dark text-center">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">First Name</th>
-					<th scope="col">Middle Name</th>
-					<th scope="col">Last Name</th>
+					<th scope="col">Physician Name</th>
+					<th scope="col">Specialty</th>
+					<th scope="col">Address</th>
+					<th scope="col">Phone</th>
 					<th scope="col">Action</th>
 					
 				</tr>
@@ -79,21 +80,22 @@
 				
 				<tbody>
 				
-					<tr class="text-center" th:each="patient,iterationStatus : ${patientList}" >
+					<tr class="text-center" th:each="physician,iterationStatus : ${physicianList}" >
 						<td th:text=${iterationStatus.count}/>
-						<td th:text=${patient.firstName}/>
-						<td th:text=${patient.middleName}/>
-						<td th:text=${patient.lastName}/>
+						<td th:text=${physician.physicianName}/>
+						<td th:text=${physician.physicianSpecialty}/>
+						<td th:text=${physician.physicianAddress}/>
+						<td th:text=${physician.physicianPhone}/>
 						<td>
 						
 							<!-- display view, update and delete link -->
-							<a class="btn btn-outline-info" th:href="@{patient/showPatientInfo(patientId=${patient.id}) }"
+							<a class="btn btn-outline-info" th:href="@{physician/showPhysicianInfo(physicianId=${physician.id}) }"
 							 	role="button">Info</a>
 							
-							<a class="btn btn-outline-success" th:href="@{patient/showformForUpdate(patientId=${patient.id}) }"
+							<a class="btn btn-outline-success" th:href="@{physician/showformForUpdate(physicianId=${physician.id}) }"
 								role="button">Update</a>
 							
-							<a class="btn btn-outline-danger" th:href="@{patient/delete(patientId=${patient.id}) }"
+							<a class="btn btn-outline-danger" th:href="@{physician/delete(physicianId=${physician.id}) }"
 								onclick="if (!(confirm('Are you sure to delete this patient?'))) return false"
 								role="button">Delete</a>
 						</td>
