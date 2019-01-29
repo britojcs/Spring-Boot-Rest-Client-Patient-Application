@@ -13,21 +13,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.javaprojects.springboot.restclientpatient.model.Medication;
 import com.javaprojects.springboot.restclientpatient.model.Patient;
+import com.javaprojects.springboot.restclientpatient.model.Pharmacy;
+import com.javaprojects.springboot.restclientpatient.model.Physician;
+import com.javaprojects.springboot.restclientpatient.service.MedicationRestClientService;
 import com.javaprojects.springboot.restclientpatient.service.PatientRestClientService;
+import com.javaprojects.springboot.restclientpatient.service.PharmacyRestClientService;
+import com.javaprojects.springboot.restclientpatient.service.PhysicianRestClientService;
 
 @Controller
 @RequestMapping("/patient")
 public class PatientController {
 	
 	private PatientRestClientService patientRestClientService;
+	private PharmacyRestClientService pharmacyRestClientService;
+	private PhysicianRestClientService physicianRestClientService;
+	private MedicationRestClientService medicationRestClientService;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	//Inject constructor
 	@Autowired
-	public PatientController(PatientRestClientService thePatientRestClientService) {
+	public PatientController(PatientRestClientService thePatientRestClientService,
+							 PharmacyRestClientService thePharmacyRestClientService,
+							 PhysicianRestClientService thePhysicianRestClientService,
+							 MedicationRestClientService theMedicationRestClientService) {
+		
 		patientRestClientService = thePatientRestClientService;
+		pharmacyRestClientService = thePharmacyRestClientService;
+		physicianRestClientService = thePhysicianRestClientService;
+		medicationRestClientService = theMedicationRestClientService;
 	}
 	
 	/**************************************************/
@@ -61,7 +77,7 @@ public class PatientController {
 		
 		theModel.addAttribute("patient", thePatient);
 		
-		return "/patient/patient-form";
+		return "/admin/patient-form";
 	}
 	
 	@PostMapping("/savePatient")
@@ -96,7 +112,7 @@ public class PatientController {
 		theModel.addAttribute("patient", thePatient);
 		
 		//Now send over to the form
-		return "/patient/patient-form";
+		return "/admin/patient-form";
 	}
 	
 	@GetMapping("/delete")
@@ -108,6 +124,60 @@ public class PatientController {
 		patientRestClientService.deletePatient(theId);
 		
 		return "redirect:/patient/list";
+	}
+	
+	/**********************************************************************
+	@GetMapping("/viewPatientInfo")
+	public String listPatientInfo(@RequestParam("patientId") int thePatientId,  Model theModel) {
+		
+		patient_id = thePatientId;
+		
+		//get medication list, physician list, and pharmacy list from corresponding services
+		List<Medication> patientMedicationList = medicationService.getMedication(thePatientId);
+		List<Pharmacy> patientPharmacyList = pharmacyService.getPharmacy(thePatientId);
+		List<Physician> patientPhysicianList = physicianService.getPhysician(thePatientId);
+		
+		//get the patient from our service
+		Patient thePatient = patientService.getPatientById(thePatientId);
+		
+				
+		//set patient, medication, physician, and pharmacy as  model attributes to populate info
+		theModel.addAttribute("selectedPatient", thePatient);
+		theModel.addAttribute("medications", patientMedicationList);
+		theModel.addAttribute("pharmacies", patientPharmacyList);
+		theModel.addAttribute("physicians",  patientPhysicianList);
+		
+		//Send over to the patient info form
+		return "patient-info";
+	}
+	
+	/********************* Medication CRUD 	 * @param <CMDBean>**************************************/
+	
+	@GetMapping("/showPatientInfo")
+	public String showPatientInfo(@RequestParam("patientId") int theId, Model theModel) {
+		
+		logger.info("Show form for update, patientId = " + theId);
+		
+		//get the patient from service
+		Patient thePatient = patientRestClientService.getPatientById(theId);
+		
+		//Get pharmacy and physician for patient
+		List<Pharmacy> pharmacyList = pharmacyRestClientService.getPharmacyForPatient(theId);
+		List<Physician> physicianList = physicianRestClientService.getPhysicianForPatient(theId);
+		List<Medication> medicationList = medicationRestClientService.getMedicationForPatient(theId);
+		logger.info("The Patient: " + thePatient);
+		
+		//set patient as a model attribute to pre-populate to the form
+		theModel.addAttribute("patientInfo", thePatient);
+		theModel.addAttribute("pharmaciesForPatient", pharmacyList);
+		theModel.addAttribute("physiciansForPatient", physicianList);
+		theModel.addAttribute("medicationsForPatient", medicationList);
+		
+		
+		
+		
+		
+		return "/admin/view-patient-info";
 	}
 	
 }

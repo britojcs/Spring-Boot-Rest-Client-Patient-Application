@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javaprojects.springboot.restclientpatient.model.Medication;
 import com.javaprojects.springboot.restclientpatient.model.Pharmacy;
 
 
@@ -21,6 +22,9 @@ import com.javaprojects.springboot.restclientpatient.model.Pharmacy;
 public class PharmacyRestClientServiceImpl implements PharmacyRestClientService {
 	
 	private RestTemplate pharmacyRestTemplate;
+	
+	@Value("${patients.spring.data.rest.url}")
+	private String patientSpringDataRestUrl;
 	
 	@Value("${pharmacies.spring.data.rest.url}")
 	private String pharmacySpringDataRestUrl;
@@ -109,6 +113,39 @@ public class PharmacyRestClientServiceImpl implements PharmacyRestClientService 
 	public void deletePharmacy(int pharmacyId) {
 		// make REST call
 		pharmacyRestTemplate.delete(pharmacySpringDataRestUrl + "/" + pharmacyId);
+	}
+
+
+	@Override
+	public List<Pharmacy> getPharmacyForPatient(int patientId) {
+		
+		try {
+			//make REST call
+			ResponseEntity<String> entity = pharmacyRestTemplate.getForEntity(patientSpringDataRestUrl + "/" + patientId + "/"+ "pharmacies",
+						String.class);
+			
+			//get the response body
+			String body = entity.getBody();
+			
+			//grab the node for _embedded comes from HAL_Spring Data REST
+			JsonNode node = pharmacyObjectMapper.readTree(body).get("_embedded");
+			
+			//get the list of medications as json node
+			JsonNode pharmacyNode = node.get("pharmacies");
+			
+			//write contents of Json node to Json string
+			String value = pharmacyObjectMapper.writeValueAsString(pharmacyNode);
+			
+			//convert json string to java collection List
+			List<Pharmacy> pharmaciesForPatient = pharmacyObjectMapper.readValue(value, 
+					new TypeReference<List<Medication>>() {});
+			
+			return pharmaciesForPatient;
+			
+		} catch (Exception exc) {
+			pharmacyLogger.error(exc.getMessage(), exc);
+			throw new RuntimeException(exc);
+		}
 	}
 
 }

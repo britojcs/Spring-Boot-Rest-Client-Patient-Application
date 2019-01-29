@@ -60,7 +60,7 @@ public class PhysicianController {
 		
 		theModel.addAttribute("physician", thePhysician);
 		
-		return "/physician/physician-form";
+		return "/admin/physician-form";
 	}
 	
 	@PostMapping("/savePhysician")
@@ -95,7 +95,7 @@ public class PhysicianController {
 		theModel.addAttribute("physician", thePhysician);
 		
 		//Now send over to the form
-		return "/physician/physician-form";
+		return "/admin/physician-form";
 	}
 	
 	@GetMapping("/delete")

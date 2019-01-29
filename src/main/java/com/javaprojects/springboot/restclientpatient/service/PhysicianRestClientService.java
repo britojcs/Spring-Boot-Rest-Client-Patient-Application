@@ -13,4 +13,6 @@ public interface PhysicianRestClientService {
 	public Physician getPhysicianById(int physicianId);
 	
 	public void deletePhysician(int physicianId);
+	
+	public List<Physician> getPhysicianForPatient(int patientId);
 }

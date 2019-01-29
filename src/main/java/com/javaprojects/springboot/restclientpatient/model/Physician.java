@@ -8,8 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Physician {
 	
-	//annotate the class as an entity and map to database table
-
+	
 	//define the fields
 
 	private int id;

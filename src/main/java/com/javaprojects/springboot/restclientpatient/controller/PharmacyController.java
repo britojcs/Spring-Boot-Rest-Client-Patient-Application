@@ -57,7 +57,7 @@ public class PharmacyController {
 		
 		theModel.addAttribute("pharmacy", thePharmacy);
 		
-		return "/pharmacy/pharmacy-form";
+		return "/admin/pharmacy-form";
 	}
 	
 	@PostMapping("/savePharmacy")
@@ -92,7 +92,7 @@ public class PharmacyController {
 		theModel.addAttribute("pharmacy", thePharmacy);
 		
 		//Now send over to the form
-		return "/pharmacy/pharmacy-form";
+		return "/admin/pharmacy-form";
 	}
 	
 	@GetMapping("/delete")

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+  <head th:replace="fragments/admin-template :: header-fragment">
+
+  </head>
+
+  <body id="page-top">
+	<!-------NAV BAR-------------------->
+  <div th:replace="fragments/admin-template :: navbar-fragment">
+
+   </div> <!--- End of navbar-fragment---->
+   
+	<!-----End of NAVBAR ---------------->
+  
+  <!---------------------------------- Sidebar ------------------------>
+    <div id="wrapper">
+
+      <div th:replace="fragments/admin-template :: sidebar-fragment">
+
+      
+     </div>  <!----End of sidebar fragment---> 
+     
+     
+	<!----------- Admin Main Content ------------------------>
+	
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Breadcrumbs-->
+           <div th:replace="fragments/admin-template :: breadcrumb-fragment">
+          </div>
+
+          <!-- Icon Cards-->
+          <div class="row mg-2">
+		<!-- <div class="col-2"></div> -->	
+			<div class="col">
+				<!-- main content goes here -->
+							<table class="table table-hover table-bordered table-sm">
+								<thead class="thead-light text-center">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Medication</th>
+										<th scope="col">Strength</th>
+										<th scope="col">Dosage</th>
+										<th scope="col">Action</th>
+										
+									</tr>
+								</thead>
+									<!-- Loop Over and print out list patient -->
+									
+									<tbody>
+							
+								<tr class="text-center" th:each="medication,iterationStatus : ${medicationsForPatient}" >
+									<td th:text=${iterationStatus.count}/>
+									<td th:text=${medication.medicationName}/>
+									<td th:text=${medication.medicationStrength}/>
+									<td th:text=${medication.medicationDosage}/>
+									<td>
+													
+											<!-- display view, update and delete link -->
+											<a class="btn btn-info btn-sm" th:href="@{/patient/showPatientInfo(patientId=${patient.id}) }"
+											 	role="button">View</a>
+											
+											<a class="btn btn-success btn-sm" th:href="@{/patient/showFormForUpdate(patientId=${patient.id}) }"
+												role="button">Edit</a>
+											
+											<a class="btn btn-danger btn-sm" th:href="@{/patient/delete(patientId=${patient.id}) }"
+												onclick="if (!(confirm('Are you sure to delete this patient?'))) return false"
+												role="button">Delete</a>
+										</td>
+										
+									</tr>
+				</tbody>
+				
+				
+			</table>
+				
+				
+				<!-- end of main content -->
+			</div>
+		
+			<!-- <div class="col-2"></div> -->	
+		</div>
+            
+            
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!------------------Sticky Footer---------------->
+        <div th:replace="fragments/admin-template :: footer-fragment">
+          
+        </div>  <!--End of footer fragment--->
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    
+    <div th:replace="fragments/admin-template :: modal-fragment">
+    
+    </div>  <!---End of modal fragment--->
+    
+    <div th:replace="fragments/admin-template :: script-fragment">
+    
+    </div>  <!--End of script fragment-->
+  </body>
+
+</html>

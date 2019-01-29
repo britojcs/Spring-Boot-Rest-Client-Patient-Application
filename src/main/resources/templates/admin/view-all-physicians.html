@@ -61,11 +61,8 @@
 		            
 				</div>
 				
-				
-			
-					
-			<table class="table table-dark table-bordered table-striped">
-			<thead class="thead-dark text-center">
+			<table class="table table-hover table-bordered table-sm">
+			<thead class="thead-light text-center">
 				<tr>
 					<th scope="col">#</th>
 					<th scope="col">Physician Name</th>
@@ -89,13 +86,11 @@
 						<td>
 						
 							<!-- display view, update and delete link -->
-							<a class="btn btn-outline-info" th:href="@{physician/showPhysicianInfo(physicianId=${physician.id}) }"
-							 	role="button">Info</a>
+														
+							<a class="btn btn-outline-success btn-sm" th:href="@{/physician/showFormForUpdate(physicianId=${physician.id}) }"
+								role="button">Edit</a>
 							
-							<a class="btn btn-outline-success" th:href="@{physician/showformForUpdate(physicianId=${physician.id}) }"
-								role="button">Update</a>
-							
-							<a class="btn btn-outline-danger" th:href="@{physician/delete(physicianId=${physician.id}) }"
+							<a class="btn btn-outline-danger btn-sm" th:href="@{/physician/delete(physicianId=${physician.id}) }"
 								onclick="if (!(confirm('Are you sure to delete this patient?'))) return false"
 								role="button">Delete</a>
 						</td>

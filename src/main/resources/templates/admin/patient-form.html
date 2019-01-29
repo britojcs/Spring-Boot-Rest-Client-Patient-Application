@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+  <head th:replace="fragments/admin-template :: header-fragment">
+
+  </head>
+
+  <body id="page-top">
+	<!-------NAV BAR-------------------->
+  <div th:replace="fragments/admin-template :: navbar-fragment">
+
+   </div> <!--- End of navbar-fragment---->
+   
+	<!-----End of NAVBAR ---------------->
+  
+  <!---------------------------------- Sidebar ------------------------>
+    <div id="wrapper">
+
+      <div th:replace="fragments/admin-template :: sidebar-fragment">
+
+      
+     </div>  <!----End of sidebar fragment---> 
+     
+     
+	<!----------- Admin Main Content ------------------------>
+	
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Breadcrumbs-->
+           <div th:replace="fragments/admin-template :: breadcrumb-fragment">
+          </div>
+
+          <!-- Icon Cards-->
+          <div class="row mg-2">
+		<!-- <div class="col-2"></div> -->	
+			<div class="col">
+			
+			<!-- Start Card Form -->
+				<div class="card w-50 mx-auto mb-5 ">
+					<div class="card-body">
+						<form action="#" th:action="@{/patient/savePatient}" th:object="${patient}" method="POST">
+
+							<!-- need to associate this data with employee id -->
+							<input type="hidden" th:field="*{id}" />
+							<div class="form-group ">
+								<label >First Name:</label>
+								<input class="form-control" type="text" th:field="*{firstName}" />
+								
+							</div>
+							<div class="form-group">
+								<label >Middle Name:</label>
+								<input class="form-control" type="text" th:field="*{middleName}" />
+								
+							</div>
+							<div class="form-group ">
+								<label >Last Name:</label>
+								<input class="form-control" type="text" th:field="*{lastName}" />
+							
+							</div>					
+							<div class="form-group">
+								<label>Gender:</label>
+								<input class="form-control" type="text" th:field="*{gender}" />
+								
+							</div>					
+							<div class="form-group">
+								<label >Date of Birth:</label>
+								<input class="form-control" type="text" th:field="*{dateOfBirth}" />
+							
+							</div>
+							<div class="form-group">
+								<label >Address:</label>
+								<input class="form-control" type="text" th:field="*{address}" />
+								
+							</div>
+							 
+							<button type="submit" class="btn btn-primary col-sm-4 ">Save</button>		
+						</form>
+		
+					</div>
+				</div>
+				<!-- End Card Form -->
+
+		</div>
+		
+			<!-- <div class="col-2"></div> -->	
+		</div>
+            
+            
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!------------------Sticky Footer---------------->
+        <div th:replace="fragments/admin-template :: footer-fragment">
+          
+        </div>  <!--End of footer fragment--->
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    
+    <div th:replace="fragments/admin-template :: modal-fragment">
+    
+    </div>  <!---End of modal fragment--->
+    
+    <div th:replace="fragments/admin-template :: script-fragment">
+    
+    </div>  <!--End of script fragment-->
+  </body>
+
+</html>

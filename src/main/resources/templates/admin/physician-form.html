@@ -25,7 +25,7 @@
 	<!----------- Admin Main Content ------------------------>
 	
       <div id="content-wrapper">
-        <!----No Fragment this section - Main Content---->
+
         <div class="container-fluid">
 
           <!-- Breadcrumbs-->
@@ -33,29 +33,50 @@
           </div>
 
           <!-- Icon Cards-->
-          <div class="row">
-            <div class="col-xl-12 col-sm-6 mb-3">
-              <div class="card text-white bg-primary o-hidden h-100">
-                <div class="card-body">
-                  <div class="card-body-icon">
-                    <i class="fas fa-fw fa-comments"></i>
-                  </div>
-                  <div class="mr-5 text-center">Project Summary</div>
-                </div>
-                <div class="card-footer text-white clearfix small z-1" >
-                  <ul>
-                    <li>Spring Boot Version 2.1.2.RELEASE</li>
-                    <li>Maven Version</li>
-                    <li>Spring MVC</li>
-                    <li>Spring Boot Security</li>
-                    <li>Thymeleaf</li>
-                    <li>Bootstrap Version 4.2.1</li>
-                  
-                  </ul>
-                 
-                </div>
-              </div>
-            </div>
+          <div class="row mg-2">
+		<!-- <div class="col-2"></div> -->	
+			<div class="col">
+			
+			<!-- Start Card Form -->
+				<div class="card w-50 mx-auto mb-5 ">
+					<div class="card-body">
+						<form action="#" th:action="@{/physician/savePhysician}" th:object="${physician}" method="POST">
+
+							<!-- need to associate this data with employee id -->
+							<input type="hidden" th:field="*{id}" />
+							<div class="form-group ">
+								<label >Physician Name:</label>
+								<input class="form-control" type="text" th:field="*{physicianName}" />
+								
+							</div>
+							<div class="form-group">
+								<label >Specialty:</label>
+								<input class="form-control" type="text" th:field="*{physicianSpecialty}" />
+								
+							</div>
+							<div class="form-group ">
+								<label >Address:</label>
+								<input class="form-control" type="text" th:field="*{physicianAddress}" />
+							
+							</div>					
+							<div class="form-group">
+								<label>Phone:</label>
+								<input class="form-control" type="text" th:field="*{physicianPhone}" />
+								
+							</div>					
+							
+							 
+							<button type="submit" class="btn btn-primary col-sm-4 ">Save</button>		
+						</form>
+		
+					</div>
+				</div>
+				<!-- End Card Form -->
+
+		</div>
+		
+			<!-- <div class="col-2"></div> -->	
+		</div>
             
             
           </div>
