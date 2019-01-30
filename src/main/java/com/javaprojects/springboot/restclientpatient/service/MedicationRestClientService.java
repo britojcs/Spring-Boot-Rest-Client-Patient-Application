@@ -13,7 +13,6 @@ public interface MedicationRestClientService {
 	public Medication getMedicationById(int medicationId);
 	
 	public void deleteMedication(int medicationId);
-	
-	public List<Medication> getMedicationForPatient(int patientId);
+		
 
 }

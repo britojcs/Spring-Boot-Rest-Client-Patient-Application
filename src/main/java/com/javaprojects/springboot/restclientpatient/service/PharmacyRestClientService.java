@@ -16,6 +16,6 @@ public interface PharmacyRestClientService {
 	
 	public void deletePharmacy(int pharmacyId);
 	
-	public List<Pharmacy> getPharmacyForPatient(int patientId);
+	
 
 }

@@ -184,7 +184,7 @@
 	            <li class="breadcrumb-item">
 	              <a href="#">Dashboard</a>
 	            </li>
-	            <li class="breadcrumb-item active">Overview</li>
+	            <li class="breadcrumb-item active" th:text="${breadcrumbItem}">Overview</li>
 	          </ol>
 		</div>
           <!-- Icon Cards-->
@@ -198,7 +198,7 @@
                   <div class="mr-5 text-center">Project Summary</div>
                 </div>
                 <div class="card-footer text-white clearfix z-1" >
-                  <ul>
+                  <ul class="text-lg">
                     <li>Spring Boot Version 2.1.2.RELEASE</li>
                     <li>Maven Version</li>
                     <li>Spring MVC</li>
@@ -218,6 +218,12 @@
         </div>
         <!-- /.container-fluid -->
 
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
         <!------------------Sticky Footer---------------->
         <div th:fragment="footer-fragment">
           <footer class="sticky-footer">
@@ -228,11 +234,6 @@
             </div>
           </footer>
         </div>  <!--End of footer fragment--->
-      </div>
-      <!-- /.content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
     <div th:fragment="modal-fragment">
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">

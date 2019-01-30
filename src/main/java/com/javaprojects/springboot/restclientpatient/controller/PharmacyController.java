@@ -44,6 +44,7 @@ public class PharmacyController {
 		
 		//add the pharmacies to model
 		theModel.addAttribute("pharmacyList", thePharmacies);
+		theModel.addAttribute("breadcrumbItem", "List of Pharmacies");
 		
 		return "/admin/view-all-pharmacies";
 	}
@@ -56,6 +57,7 @@ public class PharmacyController {
 		Pharmacy thePharmacy = new Pharmacy();
 		
 		theModel.addAttribute("pharmacy", thePharmacy);
+		theModel.addAttribute("breadcrumbItem", "Add Pharmacy");
 		
 		return "/admin/pharmacy-form";
 	}
@@ -90,6 +92,7 @@ public class PharmacyController {
 		
 		//set patient as a model attribute to pre-populate to the form
 		theModel.addAttribute("pharmacy", thePharmacy);
+		theModel.addAttribute("breadcrumbItem", "Update Pharmacy");
 		
 		//Now send over to the form
 		return "/admin/pharmacy-form";

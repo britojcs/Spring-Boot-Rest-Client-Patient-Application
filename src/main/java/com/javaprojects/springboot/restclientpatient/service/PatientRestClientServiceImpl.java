@@ -14,7 +14,10 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javaprojects.springboot.restclientpatient.model.Medication;
 import com.javaprojects.springboot.restclientpatient.model.Patient;
+import com.javaprojects.springboot.restclientpatient.model.Pharmacy;
+import com.javaprojects.springboot.restclientpatient.model.Physician;
 
 @Service
 public class PatientRestClientServiceImpl implements PatientRestClientService {
@@ -110,5 +113,106 @@ public class PatientRestClientServiceImpl implements PatientRestClientService {
 		patientRestTemplate.delete(patientSpringDataRestUrl + "/" + patientId);
 
 	}
+
+	@Override
+	public List<Medication> getMedicationForPatient(int patientId) {
+		
+		try {
+			//make REST call
+			ResponseEntity<String> entity = patientRestTemplate.getForEntity(patientSpringDataRestUrl + "/" + patientId + "/" + "medications",String.class);
+
+			
+			//get the response body
+			String body = entity.getBody();
+			
+			//grab the node for _embedded comes from HAL_Spring Data REST
+			JsonNode node = patientObjectMapper.readTree(body).get("_embedded");
+			
+			//get the list of medications as json node
+			JsonNode patientNode = node.get("medications");
+			
+			//write contents of Json node to Json string
+			String value = patientObjectMapper.writeValueAsString(patientNode);
+			
+			//convert json string to java collection List
+			List<Medication> medicationForPatient = patientObjectMapper.readValue(value, 
+					new TypeReference<List<Medication>>() {});
+			
+			return medicationForPatient;
+			
+		} catch (Exception exc) {
+			patientLogger.error(exc.getMessage(), exc);
+			throw new RuntimeException(exc);
+		}
+		
+	}
+
+	@Override
+	public List<Pharmacy> getPharmacyForPatient(int patientId) {
+
+		try {
+			//make REST call
+			ResponseEntity<String> entity = patientRestTemplate.getForEntity(patientSpringDataRestUrl + "/" + patientId + "/" + "pharmacies",String.class);
+
+			
+			//get the response body
+			String body = entity.getBody();
+			
+			//grab the node for _embedded comes from HAL_Spring Data REST
+			JsonNode node = patientObjectMapper.readTree(body).get("_embedded");
+			
+			//get the list of pharmacies as json node
+			JsonNode patientNode = node.get("pharmacies");
+			
+			//write contents of Json node to Json string
+			String value = patientObjectMapper.writeValueAsString(patientNode);
+			
+			//convert json string to java collection List
+			List<Pharmacy> pharmacyForPatient = patientObjectMapper.readValue(value, 
+					new TypeReference<List<Pharmacy>>() {});
+			
+			return pharmacyForPatient;
+			
+		} catch (Exception exc) {
+			patientLogger.error(exc.getMessage(), exc);
+			throw new RuntimeException(exc);
+		}
+		
+	}
+
+	@Override
+	public List<Physician> getPhysicianForPatient(int patientId) {
+
+		try {
+			//make REST call
+			ResponseEntity<String> entity = patientRestTemplate.getForEntity(patientSpringDataRestUrl + "/" + patientId + "/" + "physicians",String.class);
+
+			
+			//get the response body
+			String body = entity.getBody();
+			
+			//grab the node for _embedded comes from HAL_Spring Data REST
+			JsonNode node = patientObjectMapper.readTree(body).get("_embedded");
+			
+			//get the list of medications as json node
+			JsonNode patientNode = node.get("physicians");
+			
+			//write contents of Json node to Json string
+			String value = patientObjectMapper.writeValueAsString(patientNode);
+			
+			//convert json string to java collection List
+			List<Physician> physicianForPatient = patientObjectMapper.readValue(value, 
+					new TypeReference<List<Physician>>() {});
+			
+			return physicianForPatient;
+			
+		} catch (Exception exc) {
+			patientLogger.error(exc.getMessage(), exc);
+			throw new RuntimeException(exc);
+		}
+		
+	}
+
+	
 
 }

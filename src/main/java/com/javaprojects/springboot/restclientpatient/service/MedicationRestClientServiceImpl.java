@@ -22,11 +22,11 @@ public class MedicationRestClientServiceImpl implements MedicationRestClientServ
 
 	private RestTemplate medicationRestTemplate;
 	
-	private RestTemplate patientRestTemplate;
+	/*private RestTemplate patientRestTemplate;
 	
 	@Value("${patients.spring.data.rest.url}")  
 	private String patientSpringDataRestUrl;
-	
+	*/
 	@Value("${medications.spring.data.rest.url}")  
 	private String medicationSpringDataRestUrl;
 	
@@ -37,6 +37,7 @@ public class MedicationRestClientServiceImpl implements MedicationRestClientServ
 	//Inject Constructor
 	@Autowired
 	public MedicationRestClientServiceImpl(RestTemplateBuilder medicationRestTemplateBuilder) {
+		
 		medicationRestTemplate = medicationRestTemplateBuilder.build();
 		medicationObjectMapper = new ObjectMapper();
 	}
@@ -86,7 +87,7 @@ public class MedicationRestClientServiceImpl implements MedicationRestClientServ
 			medicationRestTemplate.put(medicationSpringDataRestUrl + "/" + medicationId,  theMedication);
 		}
 	}
-
+	
 	@Override
 	public Medication getMedicationById(int medicationId) {
 
@@ -109,6 +110,7 @@ public class MedicationRestClientServiceImpl implements MedicationRestClientServ
 		}
 	}
 
+
 	@Override
 	public void deleteMedication(int medicationId) {
 		
@@ -117,36 +119,6 @@ public class MedicationRestClientServiceImpl implements MedicationRestClientServ
 
 	}
 
-	@Override
-	public List<Medication> getMedicationForPatient(int patientId) {
-		
-		try {
-			//make REST call
-			ResponseEntity<String> entity = patientRestTemplate.getForEntity(patientSpringDataRestUrl + "/" + patientId + "/" + "medications",
-						String.class);
-			
-			//get the response body
-			String body = entity.getBody();
-			
-			//grab the node for _embedded comes from HAL_Spring Data REST
-			JsonNode node = medicationObjectMapper.readTree(body).get("_embedded");
-			
-			//get the list of medications as json node
-			JsonNode medicationNode = node.get("medications");
-			
-			//write contents of Json node to Json string
-			String value = medicationObjectMapper.writeValueAsString(medicationNode);
-			
-			//convert json string to java collection List
-			List<Medication> medicationsForPatient = medicationObjectMapper.readValue(value, 
-					new TypeReference<List<Medication>>() {});
-			
-			return medicationsForPatient;
-			
-		} catch (Exception exc) {
-			medicationLogger.error(exc.getMessage(), exc);
-			throw new RuntimeException(exc);
-		}
-	}
+	
 
 }

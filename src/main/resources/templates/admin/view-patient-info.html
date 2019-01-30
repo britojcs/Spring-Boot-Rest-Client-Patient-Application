@@ -27,13 +27,32 @@
       <div id="content-wrapper">
 
         <div class="container-fluid">
-
           <!-- Breadcrumbs-->
-           <div th:replace="fragments/admin-template :: breadcrumb-fragment">
+          
+	          <ol class="breadcrumb" th:object="${patientInfo}">
+	            <li class="breadcrumb-item">
+	              <a href="index">Dashboard</a>
+	            </li>
+	            <li class="breadcrumb-item active" >Patient Name: <span class="text-uppercase font-weight-bold"
+	            				 th:text="${patientInfo.getPatientFullName()}"></span></li>
+	          </ol>
+		
+          
+          <div class="card">
+          	<div class="card-body">
+          		<div class="" th:object="${patientInfo}" >
+          			<p> Gender: <span class="font-weight-bold" th:text="*{gender}"></span></p>
+          			<p> Date of Birth: <span class="font-weight-bold" th:text="*{#dates.format(dateOfBirth, 'dd-MMM-yyy')}"></span></p>
+          			<p> Address: <span class="font-weight-bold" th:text="*{address}"></span></p>
+          			
+          			
+          		</div>
+          	</div>
           </div>
 
           <!-- Icon Cards-->
-          <div class="row mg-2">
+           <!-- *************Medications************************* -->   
+         <div class="row mg-2">
 		<!-- <div class="col-2"></div> -->	
 			<div class="col">
 				<!-- main content goes here -->
@@ -52,30 +71,32 @@
 									
 									<tbody>
 							
-								<tr class="text-center" th:each="medication,iterationStatus : ${medicationsForPatient}" >
-									<td th:text=${iterationStatus.count}/>
-									<td th:text=${medication.medicationName}/>
-									<td th:text=${medication.medicationStrength}/>
-									<td th:text=${medication.medicationDosage}/>
-									<td>
+										<tr class="text-center" th:each="medication,iterationStatus : ${medicationsForPatient}" >
+											<td th:text=${iterationStatus.count}/>
+											<td th:text=${medication.medicationName}/>
+											<td th:text=${medication.medicationStrength}/>
+											<td th:text=${medication.medicationDosage}/>
+											<td>
+															
+													<!-- display view, update and delete link 
+													<a class="btn btn-info btn-sm" th:href="@{/patient/showPatientInfo(patientId=${patient.id}) }"
+													 	role="button">View</a>
 													
-											<!-- display view, update and delete link -->
-											<a class="btn btn-info btn-sm" th:href="@{/patient/showPatientInfo(patientId=${patient.id}) }"
-											 	role="button">View</a>
-											
-											<a class="btn btn-success btn-sm" th:href="@{/patient/showFormForUpdate(patientId=${patient.id}) }"
-												role="button">Edit</a>
-											
-											<a class="btn btn-danger btn-sm" th:href="@{/patient/delete(patientId=${patient.id}) }"
-												onclick="if (!(confirm('Are you sure to delete this patient?'))) return false"
-												role="button">Delete</a>
-										</td>
-										
-									</tr>
-				</tbody>
+													<a class="btn btn-success btn-sm" th:href="@{/patient/showFormForUpdate(patientId=${patient.id}) }"
+														role="button">Edit</a>
+													
+													<a class="btn btn-danger btn-sm" th:href="@{/patient/delete(patientId=${patient.id}) }"
+														onclick="if (!(confirm('Are you sure to delete this patient?'))) return false"
+														role="button">Delete</a>
+														
+														-->
+											</td>
+												
+										</tr>
+									</tbody>
 				
 				
-			</table>
+							 </table>
 				
 				
 				<!-- end of main content -->
@@ -83,26 +104,133 @@
 		
 			<!-- <div class="col-2"></div> -->	
 		</div>
+		 <!-- *************Physicians************************* -->   
+		          <div class="row mg-2">
+					<!-- <div class="col-2">Physicians</div> -->	
+						<div class="col">
+							<!-- main content goes here -->
+										<table class="table table-hover table-bordered table-sm">
+											<thead class="thead-light text-center">
+												<tr>
+													<th scope="col">#</th>
+													<th scope="col">Name</th>
+													<th scope="col">Specialty</th>
+													<th scope="col">Address</th>
+													<th scope="col">Action</th>
+													
+												</tr>
+											</thead>
+												<!-- Loop Over and print out list patient -->
+												
+												<tbody>
+										
+													<tr class="text-center" th:each="physician,iterationStatus : ${physiciansForPatient}" >
+														<td th:text=${iterationStatus.count}/>
+														<td th:text=${physician.physicianName}/>
+														<td th:text=${physician.physicianSpecialty}/>
+														<td th:text=${physician.physicianAddress}/>
+														
+														<td>
+																		
+																<!-- display view, update and delete link 
+																<a class="btn btn-info btn-sm" th:href="@{/patient/showPatientInfo(patientId=${patient.id}) }"
+																 	role="button">View</a>
+																
+																<a class="btn btn-success btn-sm" th:href="@{/patient/showFormForUpdate(patientId=${patient.id}) }"
+																	role="button">Edit</a>
+																
+																<a class="btn btn-danger btn-sm" th:href="@{/patient/delete(patientId=${patient.id}) }"
+																	onclick="if (!(confirm('Are you sure to delete this patient?'))) return false"
+																	role="button">Delete</a>
+																	
+																	-->
+														</td>
+															
+													</tr>
+												</tbody>
+							
+							
+										 </table>
+							
+							
+							<!-- end of main content -->
+						</div>
+					
+						<!-- <div class="col-2"></div> -->	
+		</div>
+	 <!-- *************Pharmacy************************* -->   
+		          <div class="row mg-2">
+					<!-- <div class="col-2">Pharmacy</div> -->	
+						<div class="col">
+							<!-- main content goes here -->
+										<table class="table table-hover table-bordered table-sm">
+											<thead class="thead-light text-center">
+												<tr>
+													<th scope="col">#</th>
+													<th scope="col">Pharmacy Name</th>
+													<th scope="col">Address</th>
+													
+													<th scope="col">Action</th>
+													
+												</tr>
+											</thead>
+												<!-- Loop Over and print out list patient -->
+												
+												<tbody>
+										
+													<tr class="text-center" th:each="pharmacy,iterationStatus : ${pharmaciesForPatient}" >
+														<td th:text=${iterationStatus.count}/>
+														<td th:text=${pharmacy.pharmacyName}/>
+														<td th:text=${pharmacy.pharmacyAddress}/>
+														
+														<td>
+																		
+																<!-- display view, update and delete link 
+																<a class="btn btn-info btn-sm" th:href="@{/patient/showPatientInfo(patientId=${patient.id}) }"
+																 	role="button">View</a>
+																
+																<a class="btn btn-success btn-sm" th:href="@{/patient/showFormForUpdate(patientId=${patient.id}) }"
+																	role="button">Edit</a>
+																
+																<a class="btn btn-danger btn-sm" th:href="@{/patient/delete(patientId=${patient.id}) }"
+																	onclick="if (!(confirm('Are you sure to delete this patient?'))) return false"
+																	role="button">Delete</a>
+																	
+																	-->
+														</td>
+															
+													</tr>
+												</tbody>
+							
+							
+										 </table>
+							
+							
+							<!-- end of main content -->
+						</div>
+					
+						<!-- <div class="col-2"></div> -->	
+		</div>
             
-            
+     <!-- *************Pharmacies************************* -->      
           </div>
 
         </div>
         <!-- /.container-fluid -->
 
+      </div>
+      <!-- /.content-wrapper -->
+
+  
+    <!-- /#wrapper -->
+    
         <!------------------Sticky Footer---------------->
         <div th:replace="fragments/admin-template :: footer-fragment">
           
         </div>  <!--End of footer fragment--->
-      </div>
-      <!-- /.content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
+    	<div th:replace="fragments/admin-template :: modal-fragment">
     
-    <div th:replace="fragments/admin-template :: modal-fragment">
-    
-    </div>  <!---End of modal fragment--->
+   		 </div>  <!---End of modal fragment--->
     
     <div th:replace="fragments/admin-template :: script-fragment">
     

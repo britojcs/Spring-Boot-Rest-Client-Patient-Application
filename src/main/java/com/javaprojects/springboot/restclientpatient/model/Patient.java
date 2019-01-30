@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Patient {
 	
@@ -96,6 +97,40 @@ public class Patient {
 		return "Patient [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
 				+ lastName + ", gender=" + gender + ", dateOfBirth=" + dateOfBirth + ", address=" + address + "]";
 	}
+	
+	
+	//Patient full name
+	public String getPatientFullName() {
+		String fullName;
+		if(middleName  != null) {
+			fullName = firstName + " " + middleName + " " + lastName;
+		}else {
+			middleName = middleName + " ";
+			fullName = firstName + " " + middleName + " " + lastName;
+		}
+		
+		
+		return fullName;
+	}
+	
+/*	
+	//Add convenience methods for bi-directional relationship
+	
+	public void addPhysicianToPatient(Physician tempPhysician) {
+		if (physicians == null) {
+			physicians = new ArrayList<>();
+		}
+		
+		this.physicians.add(tempPhysician);
+		
+		tempPhysician.getPatients().add(this);
+	}
+	
+	public void removePhysician(Physician tempPhysician) {
+		this.physicians.remove(tempPhysician);
+		tempPhysician.getPatients().remove(this);
+	}
+	*/
 
 
 }

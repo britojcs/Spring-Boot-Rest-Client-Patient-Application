@@ -116,39 +116,6 @@ public class PhysicianRestClientServiceImpl implements PhysicianRestClientServic
 		physicianRestTemplate.delete(physicianSpringDataRestUrl + "/" + physicianId);
 	}
 
-	@Override
-	public List<Physician> getPhysicianForPatient(int patientId) {
-
-		
-		try {
-			//make REST call
-			ResponseEntity<String> entity = physicianRestTemplate.getForEntity(patientSpringDataRestUrl + "/" + patientId + "/"+ "physicians",
-						String.class);
-			
-			//get the response body
-			String body = entity.getBody();
-			
-			//grab the node for _embedded comes from HAL_Spring Data REST
-			JsonNode node = physicianObjectMapper.readTree(body).get("_embedded");
-			
-			//get the list of medications as json node
-			JsonNode physicianNode = node.get("physicians");
-			
-			//write contents of Json node to Json string
-			String value = physicianObjectMapper.writeValueAsString(physicianNode);
-			
-			//convert json string to java collection List
-			List<Physician> physiciansForPatient = physicianObjectMapper.readValue(value, 
-					new TypeReference<List<Medication>>() {});
-			
-			return physiciansForPatient;
-			
-		} catch (Exception exc) {
-			physicianLogger.error(exc.getMessage(), exc);
-			throw new RuntimeException(exc);
-		}
-	}
-	
 	
 
 }

@@ -64,6 +64,7 @@ public class PatientController {
 		
 		//add the patients to model
 		theModel.addAttribute("patientList", thePatients);
+		theModel.addAttribute("breadcrumbItem", "List of Patients");
 		
 		return "/admin/view-all-patients";
 	}
@@ -76,6 +77,7 @@ public class PatientController {
 		Patient thePatient = new Patient();
 		
 		theModel.addAttribute("patient", thePatient);
+		theModel.addAttribute("breadcrumbItem", "Patient Name: " + thePatient.getPatientFullName());
 		
 		return "/admin/patient-form";
 	}
@@ -110,6 +112,7 @@ public class PatientController {
 		
 		//set patient as a model attribute to pre-populate to the form
 		theModel.addAttribute("patient", thePatient);
+		theModel.addAttribute("breadcrumbItem", "Patient Name: " + thePatient.getPatientFullName());
 		
 		//Now send over to the form
 		return "/admin/patient-form";
@@ -156,15 +159,15 @@ public class PatientController {
 	@GetMapping("/showPatientInfo")
 	public String showPatientInfo(@RequestParam("patientId") int theId, Model theModel) {
 		
-		logger.info("Show form for update, patientId = " + theId);
+		logger.info("Patient info, patientId = " + theId);
 		
 		//get the patient from service
 		Patient thePatient = patientRestClientService.getPatientById(theId);
 		
 		//Get pharmacy and physician for patient
-		List<Pharmacy> pharmacyList = pharmacyRestClientService.getPharmacyForPatient(theId);
-		List<Physician> physicianList = physicianRestClientService.getPhysicianForPatient(theId);
-		List<Medication> medicationList = medicationRestClientService.getMedicationForPatient(theId);
+		List<Pharmacy> pharmacyList = patientRestClientService.getPharmacyForPatient(theId);
+		List<Physician> physicianList = patientRestClientService.getPhysicianForPatient(theId);
+		List<Medication> medicationList = patientRestClientService.getMedicationForPatient(theId);
 		logger.info("The Patient: " + thePatient);
 		
 		//set patient as a model attribute to pre-populate to the form
@@ -172,6 +175,7 @@ public class PatientController {
 		theModel.addAttribute("pharmaciesForPatient", pharmacyList);
 		theModel.addAttribute("physiciansForPatient", physicianList);
 		theModel.addAttribute("medicationsForPatient", medicationList);
+		theModel.addAttribute("breadcrumbItem", "Patient Name: " + thePatient.getPatientFullName());
 		
 		
 		

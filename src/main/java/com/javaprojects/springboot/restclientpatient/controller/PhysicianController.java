@@ -47,6 +47,7 @@ public class PhysicianController {
 		
 		//add the physicians to model
 		theModel.addAttribute("physicianList", thePhysicians);
+		theModel.addAttribute("breadcrumbItem", "List of Physicians");
 		
 		return "/admin/view-all-physicians";
 	}
@@ -59,6 +60,7 @@ public class PhysicianController {
 		Physician thePhysician = new Physician();
 		
 		theModel.addAttribute("physician", thePhysician);
+		theModel.addAttribute("breadcrumbItem", "Add Physician");
 		
 		return "/admin/physician-form";
 	}
@@ -93,6 +95,7 @@ public class PhysicianController {
 		
 		//set patient as a model attribute to pre-populate to the form
 		theModel.addAttribute("physician", thePhysician);
+		theModel.addAttribute("breadcrumbItem", "Update Physician");
 		
 		//Now send over to the form
 		return "/admin/physician-form";
