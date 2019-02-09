@@ -75,9 +75,10 @@ public class PatientController {
 		
 		//create model attribute to bind form data
 		Patient thePatient = new Patient();
+		String fullName = thePatient.getPatientFullName();
 		
 		theModel.addAttribute("patient", thePatient);
-		theModel.addAttribute("breadcrumbItem", "Patient Name: " + thePatient.getPatientFullName());
+		theModel.addAttribute("breadcrumbItem", "Add New Patient");
 		
 		return "/admin/patient-form";
 	}
@@ -182,6 +183,26 @@ public class PatientController {
 		
 		
 		return "/admin/view-patient-info";
+	}
+	
+	@GetMapping("/addPhysicianToPatientForm")
+	public String addPhysicianToPatient(Model theModel) {
+		
+		logger.info("Listing Physicians");
+		
+		//get physicians from service
+		List<Physician> thePhysicians = physicianRestClientService.getAllPhysicians();
+		
+		logger.info("thePhysicians: " + thePhysicians);
+		
+		//add the physicians to model
+		theModel.addAttribute("physicianList", thePhysicians);
+		theModel.addAttribute("breadcrumbItem", "List of Physicians");
+		
+	
+		
+		return "/admin/add-physicians-to-patient";
+		
 	}
 	
 }

@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+							<table class="table table-hover table-bordered table-sm">
+								<thead class="thead-light text-center">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Medication</th>
+										<th scope="col">Strength</th>
+										<th scope="col">Dosage</th>
+										<th scope="col">Action</th>
+										
+									</tr>
+								</thead>
+									<!-- Loop Over and print out list patient -->
+									
+									<tbody>
+							
+										<tr class="text-center" th:each="medication,iterationStatus : ${medicationsForPatient}" >
+											<td th:text=${iterationStatus.count}/>
+											<td th:text=${medication.medicationName}/>
+											<td th:text=${medication.medicationStrength}/>
+											<td th:text=${medication.medicationDosage}/>
+											<td>
+															
+													<!-- display view, update and delete link 
+													<a class="btn btn-info btn-sm" th:href="@{/patient/showPatientInfo(patientId=${patient.id}) }"
+													 	role="button">View</a>
+													
+													<a class="btn btn-success btn-sm" th:href="@{/patient/showFormForUpdate(patientId=${patient.id}) }"
+														role="button">Edit</a>
+													
+													<a class="btn btn-danger btn-sm" th:href="@{/patient/delete(patientId=${patient.id}) }"
+														onclick="if (!(confirm('Are you sure to delete this patient?'))) return false"
+														role="button">Delete</a>
+														
+														-->
+											</td>
+												
+										</tr>
+									</tbody>
+				
+				
+							 </table>
+</body>
+</html>

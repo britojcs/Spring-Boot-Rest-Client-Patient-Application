@@ -36,52 +36,51 @@
           <div class="row mg-2">
 		<!-- <div class="col-2"></div> -->	
 			<div class="col">
+
+				<!-- Add new button: Add Patient -->
 			
-			<!-- Start Card Form -->
-				<div class="card w-50 mx-auto mb-5 ">
-					<div class="card-body">
-						<form action="#" th:action="@{/patient/savePatient}" th:object="${patient}" method="POST">
-
-							<!-- need to associate this data with employee id -->
-							<input type="hidden" th:field="*{id}" />
-							<div class="form-group ">
-								<label >First Name:</label>
-								<input class="form-control" type="text" th:field="*{firstName}" placeholder="First Name"/>
-								
-							</div>
-							<div class="form-group">
-								<label >Middle Name:</label>
-								<input class="form-control" type="text" th:field="*{middleName}" placeholder="Middle Name"/>
-								
-							</div>
-							<div class="form-group ">
-								<label >Last Name:</label>
-								<input class="form-control" type="text" th:field="*{lastName}" placeholder="Last Name"/>
+				<input type="button" class="btn btn-primary mb-3" value = "Add Physician"
+						onclick="window.location.href='/physician/addPhysicianToPatient/(physicianId=${physician.id})'; return false;"/> 
+	
+			<table class="table table-hover table-bordered table-sm">
+			<thead class="thead-light text-center">
+				<tr>
+					<th scope="col">Select</th>
+					<th scope="col">Physician Name</th>
+					<th scope="col">Specialty</th>
+					<th scope="col">Address</th>
+					<th scope="col">Phone</th>
+					<th scope="col">Action</th>
+					
+				</tr>
+			</thead>
+				<!-- Loop Over and print out list patient -->
+				
+				<tbody>
+				
+					<tr class="text-center" th:each="physician,iterationStatus : ${physicianList}" >
+						<td>
+						 	<input type="checkbox" name="physicianCheckedBox" value=${physician.id} />
+						</td>
+						<td th:text=${physician.physicianName}/>
+						<td th:text=${physician.physicianSpecialty}/>
+						<td th:text=${physician.physicianAddress}/>
+						<td th:text=${physician.physicianPhone}/>
+						<td>
+						
+							<!-- display view, update and delete link -->
+														
+							<a class="btn btn-outline-success btn-sm" th:href="@{/physician/addPhysicanToPatient(physicianId=${physician.id}) }"
+								role="button">Add</a>
 							
-							</div>					
-							<div class="form-group">
-								<label>Gender:</label>
-								<input class="form-control" type="text" th:field="*{gender}" placeholder="Male/Female"/>
-								
-							</div>					
-							<div class="form-group">
-								<label >Date of Birth:</label>
-								<input class="form-control" type="text" th:field="*{dateOfBirth}" placeholder="yyyy/mm/dd"/>
 							
-							</div>
-							<div class="form-group">
-								<label >Address:</label>
-								<input class="form-control" type="text" th:field="*{address}" placeholder="Address"/>
-								
-							</div>
-							 
-							<button type="submit" class="btn btn-primary col-sm-4 ">Save</button>		
-						</form>
-		
-					</div>
-				</div>
-				<!-- End Card Form -->
-
+						</td>
+						
+					</tr>
+				</tbody>
+				
+				
+			</table>
 		</div>
 		
 			<!-- <div class="col-2"></div> -->	

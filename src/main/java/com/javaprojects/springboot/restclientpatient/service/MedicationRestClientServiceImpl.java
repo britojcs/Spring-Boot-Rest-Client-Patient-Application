@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaprojects.springboot.restclientpatient.model.Medication;
+import com.javaprojects.springboot.restclientpatient.model.Patient;
 
 
 @Service
@@ -22,13 +23,15 @@ public class MedicationRestClientServiceImpl implements MedicationRestClientServ
 
 	private RestTemplate medicationRestTemplate;
 	
-	/*private RestTemplate patientRestTemplate;
+	@Value("${medications.spring.data.rest.url}")  
+	private String medicationSpringDataRestUrl;
+	
+	private RestTemplate patientRestTemplate;
 	
 	@Value("${patients.spring.data.rest.url}")  
 	private String patientSpringDataRestUrl;
-	*/
-	@Value("${medications.spring.data.rest.url}")  
-	private String medicationSpringDataRestUrl;
+	
+
 	
 	private ObjectMapper medicationObjectMapper;
 	
@@ -117,6 +120,16 @@ public class MedicationRestClientServiceImpl implements MedicationRestClientServ
 		// make REST call
 		medicationRestTemplate.delete(medicationSpringDataRestUrl + "/" + medicationId);
 
+	}
+	
+	@Override
+	public void addMedicationToPatient(int patientId, int medicationId) {
+		
+		Medication theMedication = getMedicationById(medicationId);
+		//Patient thePatient = getPatientById(patientId);
+		
+		medicationRestTemplate.put(medicationSpringDataRestUrl + "/" + medicationId,  theMedication);
+		
 	}
 
 	

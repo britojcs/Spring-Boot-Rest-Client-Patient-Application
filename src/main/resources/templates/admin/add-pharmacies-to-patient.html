@@ -42,15 +42,15 @@
 				
 						<!-- Add new button: Add Patient -->
 					
-						<input type="button" class="btn btn-primary" value = "Add Patient"
-								onclick="window.location.href='/patient/showFormForAdd'; return false;"/> 
+						<input type="button" class="btn btn-primary" value = "Add Pharmacy"
+								onclick="window.location.href='showFormForAdd'; return false;"/> 
 					
 					
 					<!--  add a search box -->
 								
 			      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
 			        <div class="input-group">
-			          <input type="text" class="form-control" placeholder="Search patient..." aria-label="Search" aria-describedby="basic-addon2">
+			          <input type="text" class="form-control" placeholder="Search pharmacy..." aria-label="Search" aria-describedby="basic-addon2">
 			          <div class="input-group-append">
 			            <button class="btn btn-primary" type="button">
 			              <i class="fas fa-search"></i>
@@ -60,37 +60,37 @@
 			      </form>
 		            
 				</div>
-				
+					
 			<table class="table table-hover table-bordered table-sm">
 			<thead class="thead-light text-center">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">First Name</th>
-					<th scope="col">Middle Name</th>
-					<th scope="col">Last Name</th>
+					<th scope="col">Pharmacy Name</th>
+					<th scope="col">Address</th>
+					<th scope="col">Phone</th>
 					<th scope="col">Action</th>
 					
 				</tr>
 			</thead>
-				<!-- Loop Over and print out list patient -->
+				<!-- Loop Over and print out list pharmacy -->
 				
 				<tbody>
 				
-					<tr class="text-center" th:each="patient,iterationStatus : ${patientList}" >
+					<tr class="text-center" th:each="pharmacy,iterationStatus : ${pharmacyList}" >
 						<td th:text=${iterationStatus.count}/>
-						<td th:text=${patient.firstName}/>
-						<td th:text=${patient.middleName}/>
-						<td th:text=${patient.lastName}/>
+						<td th:text=${pharmacy.pharmacyName}/>
+						
+						<td th:text=${pharmacy.pharmacyAddress}/>
+						<td th:text=${pharmacy.pharmacyPhone}/>
 						<td>
 						
 							<!-- display view, update and delete link -->
-							<a class="btn btn-outline-info btn-sm" th:href="@{/patient/showPatientInfo(patientId=${patient.id}) }"
-							 	role="button">View</a>
 							
-							<a class="btn btn-outline-success btn-sm" th:href="@{/patient/showFormForUpdate(patientId=${patient.id}) }"
+							
+							<a class="btn btn-outline-success btn-sm" th:href="@{/pharmacy/showFormForUpdate(pharmacyId=${pharmacy.id}) }"
 								role="button">Edit</a>
 							
-							<a class="btn btn-outline-danger btn-sm" th:href="@{/patient/delete(patientId=${patient.id}) }"
+							<a class="btn btn-outline-danger btn-sm" th:href="@{/pharmacy/delete(pharmacyId=${pharmacy.id}) }"
 								onclick="if (!(confirm('Are you sure to delete this patient?'))) return false"
 								role="button">Delete</a>
 						</td>

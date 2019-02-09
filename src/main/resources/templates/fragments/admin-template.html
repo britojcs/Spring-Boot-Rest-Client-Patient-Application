@@ -275,10 +275,30 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin.min.js"></script>
+    <script src="/js/patient-info.js"></script>
 
     <!-- Demo scripts for this page-->
     <script src="/js/demo/datatables-demo.js"></script>
     <script src="/js/demo/chart-area-demo.js"></script>
+    <!-- 
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	
+    	//default loading
+    	//$('#patient-info-content').load('/admin/medication-for-patient');
+    	
+    	//Handle tab click
+    	$("#patient-info-nav ul li a").click(function(){
+    		var section = $(this).attr("href");
+    		$("#patient-info-content").load("patient-info.html #" + section);
+    		//alert("OK");
+    		//Prevent default action
+    		return false;
+    	});
+    });
+    </script>
+    
+     -->
     </div>  <!--End of script fragment-->
   </body>
 
